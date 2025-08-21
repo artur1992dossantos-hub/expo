@@ -6,7 +6,7 @@ export type {
   NativeTabsScrollEdgeAppearanceProps,
   NativeTabsActiveStyleType,
   NativeTabOptions,
-  SfSymbolOrImageSource,
+  SymbolOrImageSource,
   NativeTabsTabBarItemLabelVisibilityMode,
   NativeTabsBlurEffect,
   NativeTabsTabBarMinimizeBehavior,

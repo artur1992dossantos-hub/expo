@@ -56,8 +56,8 @@ export default function Layout() {
               drawable="ic_phone"
             />
           </NativeTabs.Trigger>
-          {activeTabs.map((tab) => (
-            <NativeTabs.Trigger key={tab} name={tab}>
+          {activeTabs.map((tab, index) => (
+            <NativeTabs.Trigger key={tab} name={tab} role={index === 0 ? 'search' : undefined}>
               <Icon sf="plus" drawable="ic_search" />
               <Badge selectedBackgroundColor={{ scrollEdge: '#ff0', standard: '#00f' }} />
             </NativeTabs.Trigger>
@@ -80,9 +80,13 @@ export default function Layout() {
             <Label hidden />
             <Badge selectedBackgroundColor={{ scrollEdge: '#ff0', standard: '#00f' }}>1</Badge>
           </NativeTabs.Trigger>
-          <NativeTabs.Trigger name="explore" role="search">
-            <Icon sf="magnifyingglass" drawable="ic_search" />
-            <Label selectedStyle={{ fontSize: 32, color: '#f00' }}>Search</Label>
+          <NativeTabs.Trigger name="explore">
+            {process.env.EXPO_OS === 'android' ? (
+              <Icon src={require('../../../assets/explore_gray.png')} />
+            ) : (
+              <Icon sf={{ default: 'safari', selected: 'safari.fill' }} />
+            )}
+            <Label selectedStyle={{ fontSize: 32, color: '#f00' }}>Explore</Label>
           </NativeTabs.Trigger>
           <NativeTabs.Trigger name="dynamic">
             <Icon sf="figure.disc.sports" drawable="ic_menu" />
