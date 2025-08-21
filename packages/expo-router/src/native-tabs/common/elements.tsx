@@ -1,12 +1,18 @@
-import type { ImageSourcePropType } from 'react-native';
+import type { ColorValue, ImageSourcePropType } from 'react-native';
 import type { SFSymbol } from 'sf-symbols-typescript';
+
+import type {
+  NativeTabsBlurEffect,
+  NativeTabsLabelStyle,
+  TypeOrRecord,
+} from '../NativeBottomTabs/types';
 
 export interface LabelProps {
   /**
    * The text to display as the label for the tab.
    */
   children?: string;
-
+  selectedStyle?: NativeTabsLabelStyle;
   /**
    * If true, the label will be hidden.
    * @default false
@@ -21,14 +27,24 @@ export function Label(props: LabelProps) {
 export interface SourceIconCombination {
   /**
    * The image source to use as an icon.
+   *
+   * The value can be provided in two ways:
+   * - As an image source
+   * - As an object specifying the default and selected states
+   *
+   * @example
+   * ```tsx
+   * <Icon src={require('./path/to/icon.png')} />
+   * ```
+   *
+   * @example
+   * ```tsx
+   * <Icon src={{ default: require('./path/to/icon.png'), selected: require('./path/to/icon-selected.png') }} />
+   * ```
+   *
    * @platform iOS
    */
-  src?: ImageSourcePropType;
-  /**
-   * The image source to use as an icon when the tab is selected.
-   * @platform iOS
-   */
-  selectedSrc?: ImageSourcePropType;
+  src?: TypeOrRecord<ImageSourcePropType, 'default' | 'selected'>;
   // TODO: Remove this when custom icons can be used on Android
   /**
    * The name of the drawable resource to use as an icon.
@@ -36,30 +52,41 @@ export interface SourceIconCombination {
    */
   drawable?: string;
   sf?: never;
-  selectedSf?: never;
 }
 
 export interface NamedIconCombination {
   /**
    * The name of the SF Symbol to use as an icon.
+   *
+   * The value can be provided in two ways:
+   * - As a string with the SF Symbol name
+   * - As an object specifying the default and selected states
+   *
+   * @example
+   * ```tsx
+   * <Icon sf="magnifyingglass" />
+   * ```
+   *
+   * @example
+   * ```tsx
+   * <Icon sf={{ default: "house", selected: "house.fill" }} />
+   * ```
+   *
    * @platform iOS
    */
-  sf?: SFSymbol;
-  /**
-   * The name of the SF Symbol to use as an icon when the tab is selected.
-   * @platform iOS
-   */
-  selectedSf?: SFSymbol;
+  sf?: Required<TypeOrRecord<SFSymbol, 'default' | 'selected'>>;
   /**
    * The name of the drawable resource to use as an icon.
    * @platform android
    */
   drawable?: string;
   src?: never;
-  selectedSrc?: never;
 }
 
-export type IconProps = NamedIconCombination | SourceIconCombination;
+export type IconProps = { selectedColor?: TypeOrRecord<ColorValue, 'standard' | 'scrollEdge'> } & (
+  | NamedIconCombination
+  | SourceIconCombination
+);
 
 /**
  * Renders an icon for the tab.
@@ -83,8 +110,21 @@ export interface BadgeProps {
    * @default false
    */
   hidden?: boolean;
+  selectedBackgroundColor?: TypeOrRecord<ColorValue, 'standard' | 'scrollEdge'>;
 }
 
 export function Badge(props: BadgeProps) {
+  return null;
+}
+
+export interface TabBarProps {
+  backgroundColor?: ColorValue;
+  iconColor?: TypeOrRecord<ColorValue, 'standard' | 'disabled'>;
+  blurEffect?: NativeTabsBlurEffect;
+  // ScrollEdgeAppearance
+  children?: React.ReactNode;
+}
+
+export function TabBar(props: TabBarProps) {
   return null;
 }
